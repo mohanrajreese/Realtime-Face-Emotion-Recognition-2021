@@ -1,6 +1,7 @@
 import sys, os
 import pandas as pd
 import numpy as np
+import numba as nba
 from sklearn.model_selection import train_test_split
 
 num_features = 64
