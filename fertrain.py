@@ -3,6 +3,9 @@ import pandas as pd
 import numpy as np
 import numba as nba
 from sklearn.model_selection import train_test_split
+from keras.models import Sequential
+from keras.layers import Dense, Dropout, Activation, Flatten
+from keras.layers import Conv2D, MaxPooling2D, BatchNormalization
 
 num_features = 64
 num_labels = 7
