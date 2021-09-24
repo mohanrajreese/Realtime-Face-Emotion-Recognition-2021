@@ -24,3 +24,13 @@ X_train, X_valid, y_train, y_valid = train_test_split(X_train, y_train, test_siz
 #saving the test samples to be used later
 np.save('modTest', X_test)
 np.save('modest', y_test)
+
+
+#desinging the CNN
+model = Sequential()
+
+model.add(Conv2D(num_features, kernel_size=(3, 3), activation='relu', input_shape=(width, height, 1), data_format='channels_last', kernel_regularizer=l2(0.01)))
+model.add(Conv2D(num_features, kernel_size=(3, 3), activation='relu', padding='same'))
+model.add(BatchNormalization())
+model.add(MaxPooling2D(pool_size=(2, 2), strides=(2, 2)))
+model.add(Dropout(0.5))
