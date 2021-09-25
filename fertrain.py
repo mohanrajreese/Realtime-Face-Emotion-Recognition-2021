@@ -13,8 +13,8 @@ batch_size = 64
 epochs = 100
 width, height = 48, 48
 
-x = np.load('./fdataX.npy')
-y = np.load('./flabels.npy')
+x = np.load('./data.npy')
+y = np.load('./labels.npy')
 
 x -= np.mean(x, axis=0)
 x /= np.std(x, axis=0)
@@ -25,14 +25,13 @@ X_train, X_test, y_train, y_test = train_test_split(x, y, test_size=0.1, random_
 X_train, X_valid, y_train, y_valid = train_test_split(X_train, y_train, test_size=0.1, random_state=41)
 
 #saving the test samples to be used later
-np.save('modTest', X_test)
-np.save('modest', y_test)
+np.save('test_data', X_test)
+np.save('test_label', y_test)
 
 
 #desinging the CNN
 #1st layer
 model = Sequential()
-
 model.add(Conv2D(num_features, kernel_size=(3, 3), activation='relu', input_shape=(width, height, 1), data_format='channels_last', kernel_regularizer=l2(0.01)))
 model.add(Conv2D(num_features, kernel_size=(3, 3), activation='relu', padding='same'))
 model.add(BatchNormalization())
