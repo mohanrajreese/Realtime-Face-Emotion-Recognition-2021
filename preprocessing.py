@@ -10,12 +10,12 @@ width, height = 48, 48
 
 
 # convert a column in a dataframe into a list
-datapoiwnts = data['pixels'].tolist()
+datapoints = data['pixels'].tolist()
 
 # getting features for training
 X = []
-for xseq in datapoints:
-    xx = [int(xp) for xp in xseq.split(' ')]
+for i in datapoints:
+    xx = [int(xp) for xp in i.split(' ')]
     xx = np.asarray(xx).reshape(width, height)
     X.append(xx.astype('float32'))
 
@@ -26,11 +26,11 @@ X = np.expand_dims(X, -1)
 y = pd.get_dummies(data['emotion']).to_numpy()
 
 # storing them using numpy
-np.save('fdataX', X)
-np.save('flabels', y)
+np.save('data', X)
+np.save('labels', y)
 
 print("Preprocessing Done")
 print("Number of Features: " + str(len(X[0])))
 print("Number of Labels: " + str(len(y[0])))
 print("Number of examples in dataset:" + str(len(X)))
-print("X,y stored in fdataX.npy and flabels.npy respectively")
+print("X,y stored in data.npy and labels.npy respectively")
