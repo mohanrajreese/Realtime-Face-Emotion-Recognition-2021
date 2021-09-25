@@ -16,6 +16,7 @@ width, height = 48, 48
 x = np.load('./data.npy')
 y = np.load('./labels.npy')
 
+print("computing mean and variance for normalize each layer input during the training")
 x -= np.mean(x, axis=0)
 x /= np.std(x, axis=0)
 
