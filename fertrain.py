@@ -3,7 +3,7 @@ import pandas as pd
 import numpy as np
 from sklearn.model_selection import train_test_split
 from keras.models import Sequential
-from keras.layers import Dense, Dropout, Activation, Flatten
+from keras.layers import Dropout, Activation, Flatten
 from keras.layers import Conv2D, MaxPooling2D, BatchNormalization
 
 num_features = 64
@@ -32,9 +32,9 @@ np.save('test_label', y_test)
 print("Started designing the CNN")
 print(" ")
 
-#1st layer
 model = Sequential()
-model.add(Conv2D(num_features, kernel_size=(3, 3), activation='relu', input_shape=(width, height, 1), data_format='channels_last', kernel_regularizer=l2(0.01)))
+#1st layer
+model.add(Conv2D(num_features, kernel_size=(3, 3), activation='relu', input_shape=(width, height, 1)))
 model.add(Conv2D(num_features, kernel_size=(3, 3), activation='relu', padding='same'))
 model.add(BatchNormalization())
 model.add(MaxPooling2D(pool_size=(2, 2), strides=(2, 2)))
@@ -66,6 +66,6 @@ model.add(Dropout(0.5))
 print("4 layers completed")
 
 model.add(Flatten())
-print("Flattened the inputs for densing")
+print("Flattened the inputs for denseing")
 
 
