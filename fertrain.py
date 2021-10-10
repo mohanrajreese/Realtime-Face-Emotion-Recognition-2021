@@ -3,8 +3,14 @@ import pandas as pd
 import numpy as np
 from sklearn.model_selection import train_test_split
 from keras.models import Sequential
-from keras.layers import Dropout, Activation, Flatten
+from keras.layers import Dense, Dropout, Activation, Flatten
 from keras.layers import Conv2D, MaxPooling2D, BatchNormalization
+from keras.losses import categorical_crossentropy
+from tensorflow.keras.optimizers import Adam
+from keras.regularizers import l2
+from keras.callbacks import ReduceLROnPlateau, TensorBoard, EarlyStopping, ModelCheckpoint
+from keras.models import load_model
+from keras.models import model_from_json
 
 num_features = 64
 num_labels = 7
@@ -68,5 +74,36 @@ print("4 layers completed")
 
 model.add(Flatten())
 print("Flattened the inputs for denseing")
+
+model.add(Dense(2*2*2*num_features, activation='relu'))
+model.add(Dropout(0.4))
+model.add(Dense(2*2*num_features, activation='relu'))
+model.add(Dropout(0.4))
+model.add(Dense(2*num_features, activation='relu'))
+model.add(Dropout(0.5))
+
+model.add(Dense(num_labels, activation='softmax'))
+
+#model.summary()
+
+#Compliling the model with adam optimixer and categorical crossentropy loss
+model.compile(loss=categorical_crossentropy,
+              optimizer=Adam(lr=0.001, beta_1=0.9, beta_2=0.999, epsilon=1e-7),
+              metrics=['accuracy'])
+
+#training the model
+model.fit(np.array(X_train), np.array(y_train),
+          batch_size=batch_size,
+          epochs=epochs,
+          verbose=1,
+          validation_data=(np.array(X_valid), np.array(y_valid)),
+          shuffle=True)
+
+#saving the  model to be used later
+fer_json = model.to_json()
+with open("fer.json", "w") as json_file:
+    json_file.write(fer_json)
+model.save_weights("fer.h5")
+print("Saved model to disk")
 
 
